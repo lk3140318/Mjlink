@@ -6,7 +6,7 @@ async function shortenUrl() {
     }
     
     try {
-        let response = await fetch(`https://api.shrtco.de/v2/shorten?url=${longUrl}`);
+        let response = await fetch(`https://lk3140318.github.io/Mjlink//v2/shorten?url=${longUrl}`);
         let data = await response.json();
 
         if (data.ok) {
