@@ -1,12 +1,21 @@
-function shortenUrl() {
+async function shortenUrl() {
     let longUrl = document.getElementById("longUrl").value;
-    if (longUrl === "") {
-        alert("Please enter a URL!");
+    if (!longUrl) {
+        alert("Please enter a valid URL!");
         return;
     }
     
-    // Dummy short URL (Replace with API logic if needed)
-    let shortUrl = "https://lk3140318.github.io/Mjlink/" + Math.random().toString(36).substr(2, 6);
-    
-    document.getElementById("shortUrl").innerHTML = `Shortened URL: <a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+    try {
+        let response = await fetch(`https://api.shrtco.de/v2/shorten?url=${longUrl}`);
+        let data = await response.json();
+
+        if (data.ok) {
+            let shortUrl = data.result.short_link;
+            document.getElementById("shortUrl").innerHTML = `Shortened URL: <a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+        } else {
+            document.getElementById("shortUrl").innerHTML = "Error: Unable to shorten the URL!";
+        }
+    } catch (error) {
+        document.getElementById("shortUrl").innerHTML = "Error: Network issue or invalid URL!";
+    }
 }
